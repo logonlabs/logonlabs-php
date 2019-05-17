@@ -4,7 +4,7 @@ The official LogonLabs PHP library.
 ## Download
 ---
     composer require logonlabs/logonlabs-php
-##Logon Labs API
+## Logon Labs API
 ---
 For the full Developer Documentation please visit: https://logonlabs.com/docs/api
 ---
@@ -36,7 +36,7 @@ if ($loginData['body']['event_success']) {
 }
 ```
 ---
-###PHP Only Workflow
+### PHP Only Workflow
 The following workflow is required if you're using a php to process all transaction requests.  If this does not apply to you please refer to the SSO Login QuickStart section.
 #### Step 1 - StartLogin
 This call begins the Logon Labs managed SSO process.  The `client_data` property is optional and is used to pass any data that is required after validating the request.  The `client_encryption_key` property is optionally passed if the application requires encrypting any data that is passed between the front and back ends of it's infrastructure. The `tags`property is an Array of type Tag which is a simple object representing a key/value pair.  The `redirect` is a key to allow auto-redirect or return a url for server redirection.
@@ -79,7 +79,7 @@ if ($loginData['body']['event_success']) {
 }
 ```
 ---
-###Events
+### Events
 The CreateEvent method allows one to create events that are outside of our SSO workflows.  UpdateEvent can be used to update any events made either by CreateEvent or by our SSO login.
 ```php
 <?php 
