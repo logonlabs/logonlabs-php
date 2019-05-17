@@ -8,4 +8,6 @@ class IdentityProviders {
     const FACEBOOK = 'facebook';
     const LINKEDIN = 'linkedin';
     const OKTA = 'okta';
+    const TWITTER = 'twitter';
+    const SLACK = 'slack';
 }

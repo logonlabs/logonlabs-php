@@ -21,7 +21,7 @@ class IDPX {
     const ROUTE_PING = 'ping';
     const ROUTE_PROVIDERS = 'providers';
     const ROUTE_AUDIT = 'audit';
-    const ROUTE_VALIDATE_LOCAL = 'validate_local';
+    const ROUTE_VALIDATE_LOCAL = 'event';
 
 
     public function __construct($connection, $options = array()) {
@@ -60,7 +60,6 @@ class IDPX {
         return $this->connection->post($cmd , $data);
     }
 
-
     public function redirectLogin($token, $redirect = true) {
         $cmd = self::ROUTE_REDIRECT;
         $authorization =  $this->connection->get($cmd, array(
@@ -71,9 +70,14 @@ class IDPX {
         return $authorization;
     }
 
-    public function validateLocalLogin($data) {
+    public function createEvent($data) {
         $cmd = self::ROUTE_VALIDATE_LOCAL;
         return $this->connection->post($cmd, $data);;
+    }
+
+    public function updateEvent($event_id, $data) {
+        $cmd = self::ROUTE_VALIDATE_LOCAL . '/' . $event_id;
+        return $this->connection->post($cmd, $data);
     }
 
     public function validateLogin($data) {

@@ -2,6 +2,7 @@
 
 namespace LogonLabs\IdPx\API;
 use \Exception as Exception;
+use LogonLabs\IdPx\API\Response as Response;
 
 /*
  *  Logon Labs API Client
@@ -13,6 +14,7 @@ class Connection {
 
     private $curl;
     private $headers = array();
+    private $extra_header = array();
 
     private $response = array();
 
@@ -88,6 +90,13 @@ class Connection {
 
         $post_items = array();
         foreach ( $data as $key => $value) {
+            if (is_bool($value)) {
+                if ($value) {
+                    $value = 'true';
+                } else {
+                    $value = 'false';
+                }
+            }
             $post_items[] = $key . '=' . $value;
         }
         $post_string = implode ('&', $post_items);
@@ -100,7 +109,7 @@ class Connection {
         $this->sendRequest($url);
 
         $this->cleanExtraHeader();
-        return $this->handleResponse($url);
+        return $this->handleResponse($url, $data);
     }
     public function get($cmd, $query = false) {
         $url = $this->api_url . $cmd;
@@ -117,7 +126,7 @@ class Connection {
 
         $this->sendRequest($url);
 
-        return $this->handleResponse($url);
+        return $this->handleResponse($url, http_build_query($query));
     }
 
     private function sendRequest($url) {
@@ -125,9 +134,8 @@ class Connection {
         curl_exec($this->curl);
     }
 
-    private function handleResponse($url) {
+    private function handleResponse($url, $data) {
         $body = $this->response['body'];
-        $header = $this->response['header'];
         $status = $this->getStatus();
         $redirect = $this->getRedirect();
 
@@ -139,7 +147,7 @@ class Connection {
 
         return array(
             'status' => $status,
-            'header' => $header,
+            'request' => $data,
             'redirect' => $redirect,
             'body' => $body,
             'url' => $url
