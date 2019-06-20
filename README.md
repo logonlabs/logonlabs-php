@@ -91,14 +91,14 @@ The CreateEvent method can be used to create events that are outside of our SSO 
 use LogonLabs\EventValidationTypes as EventValidationTypes;
 $local_validation = EventValidationTypes::Pass;
 $tags = array('example-key' => 'example-value');
-$response = $logon->createEvent(LogonClient::LocalLogin, true,
+$response = $logonClient->createEvent(LogonClient::LocalLogin, true,
         $local_validation, "email_address", "ip_address", "user_agent",
         "first_name", "last_name", $tags);
 
 $event_id = $response['body']['event_id'];
 $local_validation = EventValidationTypes::Fail;
 $tags = array('failure-field' => 'detailed reason for failure');
-$response = $logon->updateEvent($event_id, $local_validation, $tags);
+$response = $logonClient->updateEvent($event_id, $local_validation, $tags);
 ```
 ---
 ### Helper Methods
@@ -107,7 +107,7 @@ This method is used to retrieve a list of all providers enabled for the applicat
 If an email address is passed to the method, it will return the list of providers available for that email domain.
 ```php
 <?php
-$response = $logon->getProviders("emailAddress");
+$response = $logonClient->getProviders("emailAddress");
 $result = $response['body'];
 $identity_providers = $result['identity_providers'];
 foreach ($identity_providers as $provider) {

@@ -40,6 +40,9 @@ class LogonClient {
         $this->app_id = $settings['app_id'];
 
         if (isset($settings['api_path'])) {
+            if (substr($settings['api_path'], -1) != '/') {
+                $settings['api_path'] .= '/';
+            }
             $this->api_path = $settings['api_path'];
         }
 
