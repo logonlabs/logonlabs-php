@@ -90,7 +90,11 @@ The CreateEvent method can be used to create events that are outside of our SSO 
 <?php 
 use LogonLabs\EventValidationTypes as EventValidationTypes;
 $local_validation = EventValidationTypes::Pass;
-$tags = array('example-key' => 'example-value');
+$tag = array(
+    'key' => 'example-key',
+    'value' => 'example-value'
+);
+$tags = array($tag);
 $response = $logonClient->createEvent(LogonClient::LocalLogin, true,
         $local_validation, "email_address", "ip_address", "user_agent",
         "first_name", "last_name", $tags);

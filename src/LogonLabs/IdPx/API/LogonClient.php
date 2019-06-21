@@ -129,8 +129,12 @@ class LogonClient {
             $data['local_validation'] = $local_validation;
         }
 
-        if (!empty($validate)) {
-            $data['validate'] = $validate;
+        if (isset($validate)) {
+            if ($validate) {
+                $data['validate'] = 'true';
+            } else {
+                $data['validate'] = 'false';
+            }
         }
         if (!empty($email_address)) {
             $data['email_address'] = $email_address;

@@ -19,6 +19,7 @@ class Connection {
     private $response = array();
 
     const JSON = 'application/json';
+    const URLENCODED = 'application/x-www-form-urlencoded';
 
     public function __construct($api_path, $app_secret) {
         if ($api_path) {
@@ -86,20 +87,12 @@ class Connection {
 
         $this->initCall();
         $this->applyExtraHeaders();
+        $this->addExtraHeader(array('name'=> 'Content-Type', 'value'=> self::URLENCODED));
         $this->handleHeaders();
 
-        $post_items = array();
-        foreach ( $data as $key => $value) {
-            if (is_bool($value)) {
-                if ($value) {
-                    $value = 'true';
-                } else {
-                    $value = 'false';
-                }
-            }
-            $post_items[] = $key . '=' . $value;
-        }
-        $post_string = implode ('&', $post_items);
+//        $post_string = json_encode($data);
+        $post_string = http_build_query($data);
+        echo $post_string;
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $post_string);
 
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'POST');
