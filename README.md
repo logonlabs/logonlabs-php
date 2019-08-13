@@ -6,15 +6,15 @@ The official LogonLabs PHP library.
     composer require logonlabs/logonlabs-php
 ## LogonLabs API
 
-- Prior to coding, some configuration is required at https://logonlabs.com/app/#app-settings
+- Prior to coding, some configuration is required at https://app.logonlabs.com/app/#app-settings
 
-- For the full Developer Documentation please visit: https://logonlabs.com/docs/api/
+- For the full Developer Documentation please visit: https://app.logonlabs.com/docs/api/
 
 ---
 ### Instantiating a new client
 
-- Your `APP_ID` can be found in [App Settings](https://logonlabs.com/app/#/app-settings).
-- `APP_SECRETS` are configured [here](https://logonlabs.com/app/#/app-secrets).
+- Your `APP_ID` can be found in [App Settings](https://app.logonlabs.com/app/#/app-settings).
+- `APP_SECRETS` are configured [here](https://app.logonlabs.com/app/#/app-secrets).
 - The `LOGONLABS_API_ENDPOINT` should be set to `https://api.logonlabs.com`.
 
 Create a new instance of `LogonClient`.  
@@ -55,7 +55,7 @@ $redirect = false;
 $redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "emailAddress", $client_data, $client_encryption_key, $tags, $redirect);
 ```
 
-The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://logonlabs.com/app/#/app-settings.
+The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://app.logonlabs.com/app/#/app-settings.
 &nbsp;
 #### Step 2 - ValidateLogin
 This method is used to validate the results of the login attempt.  `query_token` corresponds to the query parameter with the name `token` appended to the callback url specified for your app.
