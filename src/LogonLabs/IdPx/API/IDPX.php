@@ -21,7 +21,7 @@ class IDPX {
     const ROUTE_PING = 'ping';
     const ROUTE_PROVIDERS = 'providers';
     const ROUTE_AUDIT = 'audit';
-    const ROUTE_VALIDATE_LOCAL = 'event';
+    const ROUTE_VALIDATE_LOCAL = 'events';
 
 
     public function __construct($connection, $options = array()) {

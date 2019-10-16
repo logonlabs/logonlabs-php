@@ -92,7 +92,7 @@ class Connection {
 
 //        $post_string = json_encode($data);
         $post_string = http_build_query($data);
-        echo $post_string;
+        // echo $post_string;
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $post_string);
 
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'POST');

@@ -66,11 +66,26 @@ class LogonClient {
         return $this->idpx_request;
     }
 
-    public function startLogin($identity_provider, $email_address = false, $client_data = false, $client_encryption_key = false, $tags = false, $redirect = true) {
-        $data = array(
-            'app_id' => $this->app_id,
+    public function startLogin($identity_provider,
+                               $email_address = false,
+                               $client_data = false,
+                               $callback_url = false,
+                               $destination_url = false,
+                               $tags = false,
+                               $redirect = true) {
+
+		if (strlen($identity_provider) == 32) {
+			$data = array(
+				'app_id' => $this->app_id,
+				'identity_provider_id' => $identity_provider
+			);
+		}
+		else {
+			$data = array(
+			'app_id' => $this->app_id,
             'identity_provider' => $identity_provider
-        );
+			);
+		}
 
         if (!empty($email_address)) {
             $data['email_address'] = $email_address;
@@ -83,8 +98,12 @@ class LogonClient {
             $data['client_data'] = $client_data;
         }
 
-        if (!empty($client_encryption_key)) {
-            $data['client_encryption_key'] = $client_encryption_key;
+        if (!empty($callback_url)) {
+            $data['callback_url'] = $callback_url;
+        }
+
+        if (!empty($destination_url)) {
+            $data['destination_url'] = $destination_url;
         }
 
         if (!empty($tags)) {
@@ -194,10 +213,6 @@ class LogonClient {
 
     public function ping() {
         return $this->idpx()->ping($this->app_id);
-    }
-
-    public static function encrypt($client_encryption_key, $value) {
-        return Util::encrypt($client_encryption_key, $value);
     }
 
     public static function parseToken($url) {

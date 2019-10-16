@@ -55,7 +55,7 @@ $redirect = false;
 $redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $tags, $redirect);
 ```
 
-The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://logonlabs.com/app/#/app-settings.
+The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://app.logonlabs.com/app/#/app-settings.
 
 #### Step 2 - ValidateLogin
 This method is used to validate the results of the login attempt.  `query_token` corresponds to the query parameter with the name `token` appended to the callback url specified for your app.
@@ -108,7 +108,7 @@ If any Enterprise Identity Providers have been configured a separate set of matc
 <?php
 $response = $logonClient->getProviders("example@emailaddress.com");
 $result = $response['body'];
-$suggestedProvider = $result[suggested_identity_provider]; //use suggested provider
+$suggestedProvider = $result['suggested_identity_provider']; //use suggested provider
 $social_providers = $result['social_identity_providers'];
 foreach ($social_providers as $provider) {
     //each individual provider available for this app / email address
