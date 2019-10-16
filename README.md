@@ -52,7 +52,9 @@ use LogonLabs\IdentityProviders as IdentityProviders;
 $client_data = array("client_data" => "value");
 $tags = array("example-key" => "example-value");
 $redirect = false;
-$redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $tags, $redirect);
+$callback_url = 'http://www.example.com';
+$destination_url = 'http://www.example.com';
+$redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $callback_url, $destination_url, $tags, $redirect);
 ```
 
 The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://app.logonlabs.com/app/#/app-settings.
