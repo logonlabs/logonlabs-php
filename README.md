@@ -45,16 +45,17 @@ if ($loginData['body']['event_success']) {
 ### PHP Only Workflow
 The following workflow is required if you're using php to process all transaction requests.  If this does not apply to you, please refer to the SSO Login QuickStart section.
 #### Step 1 - StartLogin
-This call begins the LogonLabs managed SSO process.  The `client_data` property is optional and is used to pass any data that is required after validating the request.  The `tags` property is an Array of type Tag which is a simple object representing a key/value pair.  The `redirect` is a key to allow auto-redirect or return a url for server redirection.
+This call begins the LogonLabs managed SSO process.  The `client_data` property is optional and is used to pass any data that is required after validating the request.  The `tags` property is an Array of type Tag which is a simple object representing a key/value pair.  The `redirect` is a key to allow auto-redirect or return a url for server redirection. The `force_reauthentication` property is an optional method to attempt or force an Identity Provider to reauthenticate with the user.
 ```php
 <?php
 use LogonLabs\IdentityProviders as IdentityProviders;
+use LogonLabs\ForceAuthenticationTypes as ForceAuthenticationTypes;
 $client_data = array("client_data" => "value");
 $tags = array("example-key" => "example-value");
 $redirect = false;
 $callback_url = 'http://www.example.com';
 $destination_url = 'http://www.example.com';
-$redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $callback_url, $destination_url, $tags, $redirect);
+$redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $callback_url, $destination_url, $tags, $redirect, $ForceAuthenticationTypes::Off);
 ```
 
 The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://app.logonlabs.com/app/#/app-settings.
@@ -100,6 +101,33 @@ $response = $logonClient->createEvent(LogonClient::LocalLogin, true,
         "{FIRST_NAME}", "{LAST_NAME}", $tags);
 
 ```
+### OAuth Tokens
+Optionally, Identity Providers can be configured to return OAuth Tokens.  These tokens can be used to make API requests on behalf of the user by the OAuth protocol. In order to enable this feature `Return Authorization Data` must be enabled for your Provider. For more information visit the [Refresh Tokens Documentation](https://logonlabs.com/articles/refresh-tokens).
+#### RefreshToken
+RefreshToken renews the Access Token via the Refresh Token.
+```php
+<?php 
+$
+$identityProviderId = "identity_provider_id"; //can be retrieved by calling GetProviders
+$token = "refresh_token"; //returned by authorization_data_tokens.refresh_token in the ValidateLogin Response
+
+$response = $logonClient->refreshToken($identityProviderId, $token);
+var_dump($response);
+
+
+```
+#### RevokeToken
+RevokeToken invalidates the Token passed
+```php
+<?php 
+$
+$identityProviderId = "identity_provider_id"; //can be retrieved by calling GetProviders
+$token = "revoke_token"; //returned by authorization_data_tokens.refresh_token in the ValidateLogin Response
+
+$response = $logonClient->revokeToken($identityProviderId, $token);
+var_dump($response);
+```
+
 ---
 ### Helper Methods
 #### GetProviders

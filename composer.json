@@ -1,7 +1,7 @@
 {
     "name": "logonlabs/logonlabs-php",
     "type": "library",
-    "version": "1.5.1",
+    "version": "1.7.0",
     "description": "LogonLabs PHP API SDK",
     "authors": [
         {

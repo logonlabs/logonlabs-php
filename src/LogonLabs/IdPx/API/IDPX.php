@@ -22,7 +22,8 @@ class IDPX {
     const ROUTE_PROVIDERS = 'providers';
     const ROUTE_AUDIT = 'audit';
     const ROUTE_VALIDATE_LOCAL = 'events';
-
+    const ROUTE_REFRESH = 'refresh';
+    const ROUTE_REVOKE = 'revoke';
 
     public function __construct($connection, $options = array()) {
         if (!$this->connection) {
@@ -77,11 +78,21 @@ class IDPX {
 
     public function updateEvent($event_id, $data) {
         $cmd = self::ROUTE_VALIDATE_LOCAL . '/' . $event_id;
-        return $this->connection->post($cmd, $data);
+        return $this->connection->patch($cmd, $data);
     }
 
     public function validateLogin($data) {
         $cmd = self::ROUTE_VALIDATE;
         return $this->connection->post($cmd, $data);;
+    }
+	
+    public function refreshToken($data) {
+        $cmd = self::ROUTE_REFRESH;
+        return $this->connection->post($cmd , $data);
+    }
+
+    public function revokeToken($data) {
+        $cmd = self::ROUTE_REVOKE;
+        return $this->connection->post($cmd , $data);
     }
 }

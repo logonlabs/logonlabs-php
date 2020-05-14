@@ -4,6 +4,7 @@ namespace LogonLabs\IdPx\API;
 
 use \Exception as Exception;
 use LogonLabs\EventValidationTypes as EventValidationTypes;
+use LogonLabs\ForceAuthenticationTypes as ForceAuthenticationTypes;
 /*
  *  Logon Labs API Client
  */
@@ -72,7 +73,8 @@ class LogonClient {
                                $callback_url = false,
                                $destination_url = false,
                                $tags = false,
-                               $redirect = true) {
+                               $redirect = true, 
+							   $force_reauthentication) {
 
 		if (strlen($identity_provider) == 32) {
 			$data = array(
@@ -108,6 +110,13 @@ class LogonClient {
 
         if (!empty($tags)) {
             $data['tags'] = $tags;
+        }
+		
+		if (!empty($force_reauthentication)) {
+            if (!in_array($force_reauthentication, ForceAuthenticationTypes::$forceAuthenticationTypes)) {
+                throw new Exception("'force_reauthentication' must be either Off, Attempt, or Force");
+            }
+            $data['force_reauthentication'] = $force_reauthentication;
         }
 
         $response = $this->idpx()->startLogin($data);
@@ -220,5 +229,25 @@ class LogonClient {
         $query = $out_url['query'];
         parse_str($query, $output);
         return $output[LogonClient::token];
+    }
+	
+    public function refreshToken($identity_provider, $token) {
+		$data = array(
+			'app_id' => $this->app_id,
+			'identity_provider_id' => $identity_provider,
+			'token' => $token
+		);
+
+        return $this->idpx()->refreshToken($data);
+    }
+	
+    public function revokeToken($identity_provider, $token) {
+		$data = array(
+			'app_id' => $this->app_id,
+			'identity_provider_id' => $identity_provider,
+			'token' => $token
+		);
+
+        return $this->idpx()->revokeToken($data);
     }
 }

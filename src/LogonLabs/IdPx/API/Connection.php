@@ -104,6 +104,28 @@ class Connection {
         $this->cleanExtraHeader();
         return $this->handleResponse($url, $data);
     }
+    public function patch($cmd, $data = false) {
+        $url = $this->api_url . $cmd;
+
+        $this->initCall();
+        $this->applyExtraHeaders();
+        $this->addExtraHeader(array('name'=> 'Content-Type', 'value'=> self::URLENCODED));
+        $this->handleHeaders();
+
+//        $post_string = json_encode($data);
+        $post_string = http_build_query($data);
+        // echo $post_string;
+        curl_setopt($this->curl, CURLOPT_POSTFIELDS, $post_string);
+
+        curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($this->curl, CURLOPT_POST, true);
+
+
+        $this->sendRequest($url);
+
+        $this->cleanExtraHeader();
+        return $this->handleResponse($url, $data);
+    }
     public function get($cmd, $query = false) {
         $url = $this->api_url . $cmd;
 
