@@ -55,7 +55,7 @@ $tags = array("example-key" => "example-value");
 $redirect = false;
 $callback_url = 'http://www.example.com';
 $destination_url = 'http://www.example.com';
-$redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $callback_url, $destination_url, $tags, $redirect, $ForceAuthenticationTypes::Off);
+$redirect_uri = $logonClient->startLogin(IdentityProviders::GOOGLE, "example@emailaddress.com", $client_data, $callback_url, $destination_url, $tags, $redirect, ForceAuthenticationTypes::Off);
 ```
 
 The `redirect_uri` property returned should be redirected to by the application.  Upon submitting their credentials, users will be redirected to the `callback_url` set within the application settings at https://app.logonlabs.com/app/#/app-settings.
@@ -65,6 +65,7 @@ This method is used to validate the results of the login attempt.  `query_token`
 The response contains all details of the login and the user has now completed the SSO workflow.  If there is any additional information to add, UpdateEvent can be called on the `event_id` returned.
 ```php
 <?php
+
 use LogonLabs\EventValidationTypes as EventValidationTypes;
 
 $token = $_REQUEST['token'];
@@ -74,12 +75,12 @@ if ($loginData['body']['event_success']) {
 } else {
     $validation_details = $loginData['body']['validation_details'];
 
-    if(strcasecmp($validation_details['domain_validation'], EventValidationTypes::Fail) == 0)) {
+    if (strcasecmp($validation_details['domain_validation'], EventValidationTypes::Fail) == 0) {
         //provider used was not enabled for the domain of the user that was authenticated
     }
-    if(strcasecmp($validation_details['ip_validation'], EventValidationTypes::Fail) == 0) 
-        || strcasecmp($validation_details['geo_validation'], EventValidationTypes::Fail) == 0)
-        || strcasecmp($validation_details['time_validation'], EventValidationTypes::Fail) == 0)) {
+    if (strcasecmp($validation_details['ip_validation'], EventValidationTypes::Fail) == 0
+        || strcasecmp($validation_details['geo_validation'], EventValidationTypes::Fail) == 0
+        || strcasecmp($validation_details['time_validation'], EventValidationTypes::Fail) == 0) {
         //validation failed via restriction settings for the app
     }
 }

@@ -3,8 +3,8 @@ namespace LogonLabs;
 
 
 class EventValidationTypes {
-    const Pass = 'Pass';
-    const Fail = 'Fail';
-    const NotApplicable = 'NotApplicable';
+    const Pass = 'pass';
+    const Fail = 'fail';
+    const NotApplicable = 'notapplicable';
     public static $eventValidationTypes = array(self::Pass, self::Fail, self::NotApplicable);
 }
