@@ -51,7 +51,7 @@ This call begins the LogonLabs managed SSO process.  The `client_data` property 
 use LogonLabs\IdentityProviders as IdentityProviders;
 use LogonLabs\ForceAuthenticationTypes as ForceAuthenticationTypes;
 $client_data = array("client_data" => "value");
-$tags = array("example-key" => "example-value");
+$tags = array("key" => "example-key", "value" => "example-value");
 $redirect = false;
 $callback_url = 'http://www.example.com';
 $destination_url = 'http://www.example.com';

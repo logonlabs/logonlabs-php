@@ -109,6 +109,9 @@ class LogonClient {
         }
 
         if (!empty($tags)) {
+			if (is_object($tags)) {
+                $tags = json_encode($tags);
+            }
             $data['tags'] = $tags;
         }
 		
