@@ -51,7 +51,7 @@ This call begins the LogonLabs managed SSO process.  The `client_data` property 
 use LogonLabs\IdentityProviders as IdentityProviders;
 use LogonLabs\ForceAuthenticationTypes as ForceAuthenticationTypes;
 $client_data = array("client_data" => "value");
-$tags = array("example-key" => "example-value");
+$tags = '[{key:example-key,value:example-value}]';
 $redirect = false;
 $callback_url = 'http://www.example.com';
 $destination_url = 'http://www.example.com';
@@ -92,11 +92,7 @@ The CreateEvent method can be used to create events that are outside of our SSO 
 <?php 
 use LogonLabs\EventValidationTypes as EventValidationTypes;
 $local_validation = EventValidationTypes::Pass;
-$tag = array(
-    'key' => 'example-key',
-    'value' => 'example-value'
-);
-$tags = array($tag);
+$tags = '[{key:example-key,value:example-value}]';
 $response = $logonClient->createEvent(LogonClient::LocalLogin, true,
         $local_validation, "{EMAIL_ADDRESS}", "{IP_ADDRESS}", "{USER_AGENT}",
         "{FIRST_NAME}", "{LAST_NAME}", $tags);
